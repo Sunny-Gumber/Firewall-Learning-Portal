@@ -6,19 +6,19 @@
   <meta name="description" content="Interactive Firewall Learning Portal: Networking, FortiGate, Palo Alto and Check Point." />
   <title>Firewall Learning Portal</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="advanced.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="brand" id="brandHome" role="button" tabindex="0" title="Go to dashboard">
       <div class="brand-mark">FW</div>
-      <div>
-        <h1>Firewall Learning Portal</h1>
-        <p>Networking → FortiGate → Palo Alto → Check Point → Troubleshooting</p>
-      </div>
+      <div><h1>Firewall Learning Portal</h1><p>Networking → FortiGate → Palo Alto → Check Point → Troubleshooting</p></div>
     </div>
     <nav class="top-nav" aria-label="Main navigation">
       <button class="nav-pill active" data-view="dashboard">Dashboard</button>
       <button class="nav-pill" data-view="practice">Packet Lab</button>
+      <button class="nav-pill" data-view="engine">Packet Engine</button>
+      <button class="nav-pill" data-view="troubleshoot">Troubleshoot</button>
       <button class="nav-pill" data-view="bookmarks">Bookmarks</button>
       <button class="nav-pill" data-view="glossary">Glossary</button>
     </nav>
@@ -36,12 +36,7 @@
         <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
         <small id="completedText">0 of 36 sessions completed</small>
       </div>
-
-      <div class="streak-card">
-        <div><span>Practice best</span><strong id="packetBest">0%</strong></div>
-        <small>Packet Journey simulator</small>
-      </div>
-
+      <div class="streak-card"><div><span>Practice best</span><strong id="packetBest">0%</strong></div><small>Packet Journey simulator</small></div>
       <input id="searchInput" class="search" placeholder="Search sessions..." />
       <div id="courseNav" class="course-nav"></div>
     </aside>
@@ -52,24 +47,20 @@
           <span class="eyebrow">12-WEEK FIREWALL ENGINEER PATH</span>
           <h2>Learn the packet first. Then learn the vendor.</h2>
           <p>Watch less, practise more. Every topic connects theory, packet flow, vendor configuration, troubleshooting, quiz and assignment.</p>
-          <div class="hero-actions">
-            <button id="continueBtn" class="btn primary">Continue Learning</button>
-            <button id="heroPracticeBtn" class="btn secondary">Open Packet Lab</button>
-          </div>
+          <div class="hero-actions"><button id="continueBtn" class="btn primary">Continue Learning</button><button id="heroPracticeBtn" class="btn secondary">Open Packet Lab</button></div>
         </div>
 
-        <div class="quick-grid">
+        <div class="quick-grid six">
           <button class="quick-card" id="quickContinue"><span class="quick-icon">▶</span><strong>Continue</strong><small>Resume your next incomplete session</small></button>
-          <button class="quick-card" id="quickPractice"><span class="quick-icon">◎</span><strong>Packet Lab</strong><small>Make packet-flow decisions step by step</small></button>
+          <button class="quick-card" id="quickPractice"><span class="quick-icon">◎</span><strong>Packet Lab</strong><small>Guided packet-flow decisions</small></button>
+          <button class="quick-card engine-card" id="quickEngine"><span class="quick-icon">⚙</span><strong>Packet Engine</strong><small>Build a flow and trace the firewall decision</small></button>
+          <button class="quick-card trouble-card" id="quickTroubleshoot"><span class="quick-icon">⌁</span><strong>Troubleshoot</strong><small>Investigate incidents using evidence</small></button>
           <button class="quick-card" id="quickBookmarks"><span class="quick-icon">★</span><strong>Bookmarks</strong><small>Review lessons you saved</small></button>
           <button class="quick-card" id="quickGlossary"><span class="quick-icon">A↔Z</span><strong>Glossary</strong><small>Fast firewall and networking reference</small></button>
         </div>
 
         <div class="stats-grid">
-          <div class="stat"><strong>36</strong><span>Sessions</span></div>
-          <div class="stat"><strong>12</strong><span>Weeks</span></div>
-          <div class="stat"><strong>3×</strong><span>Sessions / week</span></div>
-          <div class="stat"><strong>90–120</strong><span>Minutes / session</span></div>
+          <div class="stat"><strong>36</strong><span>Sessions</span></div><div class="stat"><strong>12</strong><span>Weeks</span></div><div class="stat"><strong>3×</strong><span>Sessions / week</span></div><div class="stat"><strong>90–120</strong><span>Minutes / session</span></div>
         </div>
 
         <section class="panel path-panel">
@@ -81,68 +72,86 @@
             <div class="path-card"><span>04</span><h4>Check Point + Mastery</h4><p>Management/Gateway, policy, NAT, VPN, ClusterXL and multi-vendor design.</p><small>Weeks 10–12</small></div>
           </div>
         </section>
-
-        <div class="panel">
-          <h3>How to use each session</h3>
-          <div class="session-pattern"><span>15m Recap</span><span>30m Concept</span><span>45m Lab</span><span>15m Break/Fix</span><span>15m FAQ + Assignment</span></div>
-        </div>
-
-        <div class="panel coach-card">
-          <div class="coach-badge">COACHING RULE</div>
-          <p><b>Never configure blindly.</b> For every flow, identify: source → destination → ingress → route → policy → NAT → inspection → egress → return path.</p>
-        </div>
+        <div class="panel"><h3>How to use each session</h3><div class="session-pattern"><span>15m Recap</span><span>30m Concept</span><span>45m Lab</span><span>15m Break/Fix</span><span>15m FAQ + Assignment</span></div></div>
+        <div class="panel coach-card"><div class="coach-badge">COACHING RULE</div><p><b>Never configure blindly.</b> For every flow, identify: source → destination → ingress → route → policy → NAT → inspection → egress → return path.</p></div>
       </div>
 
       <section id="practiceView" class="view-panel hidden">
         <div class="page-head"><div><span class="eyebrow">INTERACTIVE PRACTICE</span><h2>Packet Journey Lab</h2><p>Think like a firewall engineer. Make one decision at a time and see how the packet moves.</p></div><button id="practiceHomeBtn" class="btn secondary">Dashboard</button></div>
         <div class="sim-shell">
-          <div class="sim-toolbar">
-            <label>Scenario <select id="scenarioSelect"></select></label>
-            <div class="sim-score"><span>Score</span><strong id="simScore">0 / 0</strong></div>
-            <button id="restartScenarioBtn" class="btn secondary">Restart</button>
-          </div>
-
+          <div class="sim-toolbar"><label>Scenario <select id="scenarioSelect"></select></label><div class="sim-score"><span>Score</span><strong id="simScore">0 / 0</strong></div><button id="restartScenarioBtn" class="btn secondary">Restart</button></div>
           <div id="networkCanvas" class="network-canvas" aria-label="Packet path diagram"></div>
-
           <div class="sim-grid">
-            <section class="panel sim-question-panel">
-              <div class="step-line"><span id="simStepBadge" class="step-badge">STEP 1</span><span id="simProgressText">1 of 1</span></div>
-              <h3 id="simQuestion"></h3>
-              <p id="simContext" class="hint"></p>
-              <div id="simOptions" class="sim-options"></div>
-              <div id="simFeedback" class="sim-feedback hidden"></div>
-              <div class="sim-actions"><button id="simNextBtn" class="btn primary" disabled>Next Step →</button></div>
-            </section>
-            <aside class="panel evidence-panel">
-              <h3>Engineer Evidence</h3>
-              <div id="evidenceLog" class="evidence-log"><p class="hint">Your decisions and packet evidence will appear here.</p></div>
-            </aside>
+            <section class="panel sim-question-panel"><div class="step-line"><span id="simStepBadge" class="step-badge">STEP 1</span><span id="simProgressText">1 of 1</span></div><h3 id="simQuestion"></h3><p id="simContext" class="hint"></p><div id="simOptions" class="sim-options"></div><div id="simFeedback" class="sim-feedback hidden"></div><div class="sim-actions"><button id="simNextBtn" class="btn primary" disabled>Next Step →</button></div></section>
+            <aside class="panel evidence-panel"><h3>Engineer Evidence</h3><div id="evidenceLog" class="evidence-log"><p class="hint">Your decisions and packet evidence will appear here.</p></div></aside>
           </div>
         </div>
       </section>
 
-      <section id="bookmarksView" class="view-panel hidden">
-        <div class="page-head"><div><span class="eyebrow">REVIEW QUEUE</span><h2>Bookmarked Lessons</h2><p>Keep difficult or important lessons one click away.</p></div><button id="bookmarksHomeBtn" class="btn secondary">Dashboard</button></div>
-        <div id="bookmarkList" class="review-grid"></div>
+      <section id="engineView" class="view-panel hidden">
+        <div class="page-head"><div><span class="eyebrow">DETERMINISTIC NETWORK LAB</span><h2>Real Packet Engine</h2><p>Enter a flow, change firewall conditions, and trace exactly where the packet is delivered, translated, allowed or dropped.</p></div><button id="engineHomeBtn" class="btn secondary">Dashboard</button></div>
+        <div class="lab-stats"><div class="lab-stat"><span>Engine runs</span><strong id="engineRunsStat">0</strong></div><div class="lab-stat"><span>Model</span><strong>IPv4</strong></div></div>
+        <div class="advanced-note"><b>This engine is deterministic, not AI-generated.</b> It calculates subnet membership, gateway use, connected/static/default routing with longest-prefix match, policy matching, SNAT/DNAT, session state and return translation.</div>
+        <div class="engine-toolbar panel"><div class="field"><label for="enginePreset">Load a lab preset</label><select id="enginePreset"></select></div><button id="engLoadPresetBtn" class="btn secondary">Load preset</button></div>
+        <div class="engine-layout">
+          <section class="panel engine-builder">
+            <div class="section-head"><h3>Build the packet</h3><span class="section-tag">INPUT</span></div>
+            <div class="engine-form">
+              <div class="field"><label>Source IP</label><input id="engSourceIp" value="192.168.10.25"></div>
+              <div class="field"><label>Source Prefix</label><input id="engPrefix" type="number" min="0" max="32" value="24"></div>
+              <div class="field"><label>Default Gateway</label><input id="engGateway" value="192.168.10.1"></div>
+              <div class="field"><label>Ingress</label><select id="engIngress"><option value="lan">LAN / inside</option><option value="wan">WAN / outside</option></select></div>
+              <div class="field"><label>Destination IP</label><input id="engDestIp" value="8.8.8.8"></div>
+              <div class="field"><label>Protocol</label><select id="engProtocol"><option>TCP</option><option>UDP</option><option>ICMP</option></select></div>
+              <div class="field"><label>Source Port</label><input id="engSrcPort" type="number" value="51544"></div>
+              <div class="field"><label>Destination Port</label><input id="engDstPort" type="number" value="443"></div>
+              <div class="field full"><label>Outbound Policy Profile</label><select id="engPolicy"><option value="web">Web + DNS + ICMP only</option><option value="allow">Allow all lab traffic</option><option value="deny">Explicit deny</option></select></div>
+              <div class="toggle-grid">
+                <label class="toggle-row"><input id="engDefaultRoute" type="checkbox" checked><span>Default route configured</span></label>
+                <label class="toggle-row"><input id="engSnat" type="checkbox" checked><span>Outbound SNAT enabled</span></label>
+                <label class="toggle-row"><input id="engDnat" type="checkbox"><span>DNAT 203.0.113.2:8443 → 10.0.20.10:443</span></label>
+                <label class="toggle-row"><input id="engInboundPolicy" type="checkbox" checked><span>WAN → DMZ HTTPS policy</span></label>
+              </div>
+              <div class="engine-actions"><button id="engRunBtn" class="btn primary">▶ Run Packet</button></div>
+            </div>
+            <div class="engine-summary"><h4>Generated firewall configuration</h4><div id="engConfigSummary"></div></div>
+            <div style="overflow:auto;margin-top:14px"><table class="config-table"><thead><tr><th>Policy</th><th>Zones</th><th>Service</th><th>Action</th></tr></thead><tbody id="engPolicyTable"></tbody></table></div>
+          </section>
+          <section class="panel engine-result-panel">
+            <div class="section-head"><h3>Packet trace</h3><span class="section-tag">ENGINE</span></div>
+            <div id="engVerdict" class="engine-empty"><strong>No packet sent yet</strong>Configure the flow and click Run Packet.</div>
+            <div class="engine-facts">
+              <div class="fact-card"><span>Original packet</span><code id="engBefore">—</code></div><div class="fact-card"><span>Final packet</span><code id="engAfter">—</code></div>
+              <div class="fact-card"><span>Selected route</span><code id="engRouteResult">—</code></div><div class="fact-card"><span>Policy</span><code id="engPolicyResult">—</code></div>
+              <div class="fact-card"><span>NAT</span><code id="engNatResult">—</code></div><div class="fact-card"><span>Session</span><code id="engSessionResult">—</code></div>
+            </div>
+            <div id="engTrace" class="trace-list"></div>
+          </section>
+        </div>
       </section>
 
-      <section id="glossaryView" class="view-panel hidden">
-        <div class="page-head"><div><span class="eyebrow">QUICK REFERENCE</span><h2>Firewall & Networking Glossary</h2><p>Search a term and get the operational meaning—not just a dictionary definition.</p></div><button id="glossaryHomeBtn" class="btn secondary">Dashboard</button></div>
-        <input id="glossarySearch" class="search glossary-search" placeholder="Search ARP, NAT, App-ID, SIC, ClusterXL..." />
-        <div id="glossaryList" class="glossary-grid"></div>
+      <section id="troubleshootView" class="view-panel hidden">
+        <div class="page-head"><div><span class="eyebrow">BREAK / FIX MASTERCLASS</span><h2>Troubleshooting Simulator</h2><p>Collect evidence, avoid random changes, and diagnose the root cause with the fewest useful steps.</p></div><button id="troubleshootHomeBtn" class="btn secondary">Dashboard</button></div>
+        <div class="lab-stats"><div class="lab-stat"><span>Best score</span><strong id="trBestStat">0%</strong></div><div class="lab-stat"><span>Scoring</span><strong>100</strong></div></div>
+        <div class="incident-toolbar panel"><div class="field"><label for="incidentSelect">Incident</label><select id="incidentSelect"></select></div><button id="newIncidentBtn" class="btn secondary">Restart Incident</button><button id="trHintBtn" class="btn hint-btn">Need a hint (-8)</button></div>
+        <div class="tr-layout">
+          <section class="panel incident-panel">
+            <div class="incident-card"><div class="incident-top"><span id="incidentDifficulty" class="difficulty"></span><span id="trStatus" class="status-chip investigating">Investigating</span></div><h3 id="incidentTitle"></h3><p id="incidentSymptom"></p></div>
+            <div class="tr-score-box"><div><span class="eyebrow">EFFICIENCY SCORE</span><p class="hint">Unnecessary actions and wrong diagnoses reduce the score.</p></div><strong id="trScore">100</strong></div>
+            <h3>Choose your diagnostic actions</h3><div id="trActions" class="diagnostic-grid"></div>
+            <h3 style="margin-top:22px">Make a diagnosis</h3><div id="diagnosisOptions" class="diagnosis-options"></div>
+            <div id="trOutcome" class="outcome hidden"></div>
+          </section>
+          <aside class="panel"><div class="section-head"><h3>Evidence Board</h3><span class="section-tag">PROVE IT</span></div><div id="trEvidence" class="tr-evidence"></div></aside>
+        </div>
       </section>
+
+      <section id="bookmarksView" class="view-panel hidden"><div class="page-head"><div><span class="eyebrow">REVIEW QUEUE</span><h2>Bookmarked Lessons</h2><p>Keep difficult or important lessons one click away.</p></div><button id="bookmarksHomeBtn" class="btn secondary">Dashboard</button></div><div id="bookmarkList" class="review-grid"></div></section>
+      <section id="glossaryView" class="view-panel hidden"><div class="page-head"><div><span class="eyebrow">QUICK REFERENCE</span><h2>Firewall & Networking Glossary</h2><p>Search a term and get the operational meaning—not just a dictionary definition.</p></div><button id="glossaryHomeBtn" class="btn secondary">Dashboard</button></div><input id="glossarySearch" class="search glossary-search" placeholder="Search ARP, NAT, App-ID, SIC, ClusterXL..." /><div id="glossaryList" class="glossary-grid"></div></section>
 
       <article id="lessonView" class="lesson view-panel hidden">
-        <div class="lesson-head">
-          <div><span id="lessonMeta" class="eyebrow"></span><h2 id="lessonTitle"></h2><p id="lessonGoal" class="lesson-goal"></p></div>
-          <div class="lesson-head-actions"><button id="bookmarkBtn" class="btn secondary">☆ Bookmark</button><button id="completeBtn" class="btn primary"></button></div>
-        </div>
-
-        <div class="lesson-grid">
-          <section class="panel video-panel"><h3>Watch</h3><div class="video-wrap"><iframe id="videoFrame" title="Course video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><p id="watchTarget" class="hint"></p><div id="resourceLinks" class="links"></div></section>
-          <section class="panel"><h3>Learning objectives</h3><ul id="objectives"></ul><button id="lessonPracticeBtn" class="btn lab-cta">Practise packet thinking</button></section>
-        </div>
-
+        <div class="lesson-head"><div><span id="lessonMeta" class="eyebrow"></span><h2 id="lessonTitle"></h2><p id="lessonGoal" class="lesson-goal"></p></div><div class="lesson-head-actions"><button id="bookmarkBtn" class="btn secondary">☆ Bookmark</button><button id="completeBtn" class="btn primary"></button></div></div>
+        <div class="lesson-grid"><section class="panel video-panel"><h3>Watch</h3><div class="video-wrap"><iframe id="videoFrame" title="Course video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><p id="watchTarget" class="hint"></p><div id="resourceLinks" class="links"></div></section><section class="panel"><h3>Learning objectives</h3><ul id="objectives"></ul><button id="lessonPracticeBtn" class="btn lab-cta">Practise packet thinking</button></section></div>
         <section class="panel"><div class="section-head"><h3>Concept notes</h3><span class="section-tag">LEARN</span></div><div id="concepts" class="concepts"></div></section>
         <section class="panel packet-panel"><div class="section-head"><h3>Packet-flow challenge</h3><span class="section-tag">THINK</span></div><pre id="packetFlow"></pre></section>
         <section class="panel"><div class="section-head"><h3>Hands-on lab</h3><span class="section-tag">DO</span></div><ol id="labSteps"></ol></section>
@@ -159,6 +168,8 @@
   <footer><p>Static GitHub Pages learning portal · Your progress stays in your browser unless exported.</p></footer>
   <script src="data.js"></script>
   <script src="simulator.js"></script>
+  <script src="packet-engine.js"></script>
   <script src="app.js"></script>
+  <script src="advanced-labs.js"></script>
 </body>
 </html>
