@@ -15,10 +15,46 @@ Interactive 12-week / 36-session learning portal covering:
 - Hands-on labs and break/fix scenarios
 - FAQs and checkpoint quizzes
 - Assignment workspace and personal notes
+- Bookmarks and searchable glossary
+- Guided Packet Journey simulator
+- Deterministic IPv4 Packet Engine
+- Evidence-driven Troubleshooting Simulator
 - Local progress tracking
 - Export/import progress as JSON
 - Responsive dark network-security UI
 - GitHub Pages deployment workflow
+
+## Packet Engine
+
+`packet-engine.js` is a browser-side deterministic networking engine. It currently models:
+
+- IPv4 validation and subnet decisions
+- Same-subnet vs default-gateway behavior
+- ARP next-hop reasoning
+- Connected, static and default routes
+- Longest-prefix route selection
+- Interface-to-zone mapping
+- Security-policy matching and implicit deny
+- SNAT and DNAT
+- Basic stateful-session creation
+- Return-session / reverse-NAT reasoning
+
+The Packet Engine UI includes working and broken presets such as HTTPS Internet access, policy-blocked SSH, missing default route, missing SNAT, same-subnet traffic, working DNAT and DNAT with a missing WAN-to-DMZ policy.
+
+## Troubleshooting Simulator
+
+The simulator trains an evidence-first workflow. A learner receives an incident, selects diagnostic actions, collects observations and makes a root-cause diagnosis. Unnecessary actions, hints and incorrect diagnoses reduce the score.
+
+Current incident types include:
+
+- DNS resolution blocked
+- Missing default route
+- SNAT disabled
+- Application/port blocked by policy
+- DNAT present but inbound security policy missing
+- Remote return-path routing failure
+
+Several incidents call the deterministic Packet Engine directly, so the observed drop reason is calculated rather than hard-coded.
 
 ## Learning approach
 
@@ -48,6 +84,15 @@ The guiding principle is:
 | 10–11 | Check Point |
 | 12 | Multi-vendor troubleshooting and final design |
 
+## Main files
+
+- `data.js` — 36-session curriculum
+- `simulator.js` — guided Packet Journey scenarios and glossary
+- `packet-engine.js` — deterministic packet-processing engine
+- `advanced-labs.js` — Packet Engine UI and Troubleshooting Simulator
+- `app.js` — main learning portal state and navigation
+- `styles.css` / `advanced.css` — interface styling
+
 ## Run locally
 
 Open `index.html`, or run a local web server:
@@ -60,34 +105,14 @@ Then browse to `http://localhost:8000`.
 
 ## GitHub Pages
 
-The project contains `.github/workflows/pages.yml` for GitHub Pages deployment and is configured to enable Pages on first deployment when repository permissions allow it.
+The project contains `.github/workflows/pages.yml` for automatic GitHub Pages deployment.
 
-Expected site URL:
+Live site:
 
 `https://sunny-gumber.github.io/Firewall-Learning-Portal/`
 
 ## Progress and notes
 
-Version 1 stores completion status, quiz scores, notes and assignment answers in browser `localStorage` so the portal can remain a free static site.
+Course progress, quiz scores, bookmarks, notes and assignment answers are stored in browser `localStorage` so the portal remains a free static site. Packet Engine / troubleshooting usage statistics are also stored locally.
 
-Use **Export Progress** and **Import Progress** to move/backup your data.
-
-A later version can add Supabase authentication and cloud sync without changing the basic lesson structure.
-
-## Content source structure
-
-`data.js` contains the 36 lesson records. `app.js` renders them into the interactive learning interface.
-
-Each lesson contains:
-
-- learning goal
-- video/watch target
-- objectives
-- concept notes
-- packet-flow challenge
-- lab
-- troubleshooting scenario and workflow
-- FAQs
-- quiz
-- assignment
-- official/reference links
+Use **Export** and **Import** for the main course progress backup. A future version can add Supabase authentication and cloud sync without replacing the learning engine.
