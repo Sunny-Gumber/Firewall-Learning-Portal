@@ -29,6 +29,20 @@ jobs:
         with:
           enablement: true
 
+      - name: Enable Study Flow v4
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          html = p.read_text(encoding='utf-8')
+          if 'study-v4.css' not in html:
+              html = html.replace('</head>', '  <link rel="stylesheet" href="study-v4.css" />\n</head>')
+          if 'study-v4.js' not in html:
+              html = html.replace('</body>', '  <script src="study-v4.js"></script>\n</body>')
+          p.write_text(html, encoding='utf-8')
+          PY
+
       - name: Upload site
         uses: actions/upload-pages-artifact@v4
         with:
