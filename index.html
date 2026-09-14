@@ -9,16 +9,22 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">
+    <div class="brand" id="brandHome" role="button" tabindex="0" title="Go to dashboard">
       <div class="brand-mark">FW</div>
       <div>
         <h1>Firewall Learning Portal</h1>
         <p>Networking → FortiGate → Palo Alto → Check Point → Troubleshooting</p>
       </div>
     </div>
+    <nav class="top-nav" aria-label="Main navigation">
+      <button class="nav-pill active" data-view="dashboard">Dashboard</button>
+      <button class="nav-pill" data-view="practice">Packet Lab</button>
+      <button class="nav-pill" data-view="bookmarks">Bookmarks</button>
+      <button class="nav-pill" data-view="glossary">Glossary</button>
+    </nav>
     <div class="top-actions">
-      <button id="exportBtn" class="btn secondary">Export Progress</button>
-      <label class="btn secondary file-btn">Import Progress<input id="importInput" type="file" accept=".json" hidden></label>
+      <button id="exportBtn" class="btn secondary">Export</button>
+      <label class="btn secondary file-btn">Import<input id="importInput" type="file" accept=".json" hidden></label>
       <button id="resetBtn" class="btn danger">Reset</button>
     </div>
   </header>
@@ -26,12 +32,14 @@
   <main class="layout">
     <aside class="sidebar">
       <div class="progress-card">
-        <div class="progress-top">
-          <span>Course progress</span>
-          <strong id="progressText">0%</strong>
-        </div>
+        <div class="progress-top"><span>Course progress</span><strong id="progressText">0%</strong></div>
         <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
         <small id="completedText">0 of 36 sessions completed</small>
+      </div>
+
+      <div class="streak-card">
+        <div><span>Practice best</span><strong id="packetBest">0%</strong></div>
+        <small>Packet Journey simulator</small>
       </div>
 
       <input id="searchInput" class="search" placeholder="Search sessions..." />
@@ -39,14 +47,22 @@
     </aside>
 
     <section class="content">
-      <div id="dashboard" class="dashboard">
+      <div id="dashboard" class="dashboard view-panel">
         <div class="hero">
-          <span class="eyebrow">12-WEEK MASTER PROGRAM</span>
+          <span class="eyebrow">12-WEEK FIREWALL ENGINEER PATH</span>
           <h2>Learn the packet first. Then learn the vendor.</h2>
-          <p>This portal keeps video lessons, theory, labs, FAQs, assignments, quizzes, notes and your progress in one place.</p>
+          <p>Watch less, practise more. Every topic connects theory, packet flow, vendor configuration, troubleshooting, quiz and assignment.</p>
           <div class="hero-actions">
-            <button id="continueBtn" class="btn primary">Start / Continue</button>
+            <button id="continueBtn" class="btn primary">Continue Learning</button>
+            <button id="heroPracticeBtn" class="btn secondary">Open Packet Lab</button>
           </div>
+        </div>
+
+        <div class="quick-grid">
+          <button class="quick-card" id="quickContinue"><span class="quick-icon">▶</span><strong>Continue</strong><small>Resume your next incomplete session</small></button>
+          <button class="quick-card" id="quickPractice"><span class="quick-icon">◎</span><strong>Packet Lab</strong><small>Make packet-flow decisions step by step</small></button>
+          <button class="quick-card" id="quickBookmarks"><span class="quick-icon">★</span><strong>Bookmarks</strong><small>Review lessons you saved</small></button>
+          <button class="quick-card" id="quickGlossary"><span class="quick-icon">A↔Z</span><strong>Glossary</strong><small>Fast firewall and networking reference</small></button>
         </div>
 
         <div class="stats-grid">
@@ -56,110 +72,93 @@
           <div class="stat"><strong>90–120</strong><span>Minutes / session</span></div>
         </div>
 
-        <div class="panel">
-          <h3>How to use each session</h3>
-          <div class="session-pattern">
-            <span>15m Recap</span><span>30m Concept</span><span>45m Lab</span><span>15m Troubleshooting</span><span>15m FAQ + Assignment</span>
+        <section class="panel path-panel">
+          <div class="section-head"><div><span class="eyebrow">YOUR ROADMAP</span><h3>From packets to multi-vendor troubleshooting</h3></div></div>
+          <div class="path-grid">
+            <div class="path-card"><span>01</span><h4>Networking Core</h4><p>ARP, IP, TCP/UDP, DNS, VLAN, routing and NAT.</p><small>Weeks 1–3</small></div>
+            <div class="path-card"><span>02</span><h4>FortiGate</h4><p>Policy, NAT, security profiles, VPN, SD-WAN and CLI troubleshooting.</p><small>Weeks 4–6</small></div>
+            <div class="path-card"><span>03</span><h4>Palo Alto</h4><p>Zones, App-ID, NAT, User-ID, profiles and packet troubleshooting.</p><small>Weeks 7–9</small></div>
+            <div class="path-card"><span>04</span><h4>Check Point + Mastery</h4><p>Management/Gateway, policy, NAT, VPN, ClusterXL and multi-vendor design.</p><small>Weeks 10–12</small></div>
           </div>
-        </div>
+        </section>
 
         <div class="panel">
-          <h3>Learning rule</h3>
-          <p><b>Never configure blindly.</b> For every task, answer: What packet enters? Which interface/zone? Which route? Which policy? Which NAT? What session is created? What must happen on the return path?</p>
+          <h3>How to use each session</h3>
+          <div class="session-pattern"><span>15m Recap</span><span>30m Concept</span><span>45m Lab</span><span>15m Break/Fix</span><span>15m FAQ + Assignment</span></div>
+        </div>
+
+        <div class="panel coach-card">
+          <div class="coach-badge">COACHING RULE</div>
+          <p><b>Never configure blindly.</b> For every flow, identify: source → destination → ingress → route → policy → NAT → inspection → egress → return path.</p>
         </div>
       </div>
 
-      <article id="lessonView" class="lesson hidden">
-        <div class="lesson-head">
-          <div>
-            <span id="lessonMeta" class="eyebrow"></span>
-            <h2 id="lessonTitle"></h2>
-            <p id="lessonGoal" class="lesson-goal"></p>
+      <section id="practiceView" class="view-panel hidden">
+        <div class="page-head"><div><span class="eyebrow">INTERACTIVE PRACTICE</span><h2>Packet Journey Lab</h2><p>Think like a firewall engineer. Make one decision at a time and see how the packet moves.</p></div><button id="practiceHomeBtn" class="btn secondary">Dashboard</button></div>
+        <div class="sim-shell">
+          <div class="sim-toolbar">
+            <label>Scenario <select id="scenarioSelect"></select></label>
+            <div class="sim-score"><span>Score</span><strong id="simScore">0 / 0</strong></div>
+            <button id="restartScenarioBtn" class="btn secondary">Restart</button>
           </div>
-          <button id="completeBtn" class="btn primary"></button>
+
+          <div id="networkCanvas" class="network-canvas" aria-label="Packet path diagram"></div>
+
+          <div class="sim-grid">
+            <section class="panel sim-question-panel">
+              <div class="step-line"><span id="simStepBadge" class="step-badge">STEP 1</span><span id="simProgressText">1 of 1</span></div>
+              <h3 id="simQuestion"></h3>
+              <p id="simContext" class="hint"></p>
+              <div id="simOptions" class="sim-options"></div>
+              <div id="simFeedback" class="sim-feedback hidden"></div>
+              <div class="sim-actions"><button id="simNextBtn" class="btn primary" disabled>Next Step →</button></div>
+            </section>
+            <aside class="panel evidence-panel">
+              <h3>Engineer Evidence</h3>
+              <div id="evidenceLog" class="evidence-log"><p class="hint">Your decisions and packet evidence will appear here.</p></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="bookmarksView" class="view-panel hidden">
+        <div class="page-head"><div><span class="eyebrow">REVIEW QUEUE</span><h2>Bookmarked Lessons</h2><p>Keep difficult or important lessons one click away.</p></div><button id="bookmarksHomeBtn" class="btn secondary">Dashboard</button></div>
+        <div id="bookmarkList" class="review-grid"></div>
+      </section>
+
+      <section id="glossaryView" class="view-panel hidden">
+        <div class="page-head"><div><span class="eyebrow">QUICK REFERENCE</span><h2>Firewall & Networking Glossary</h2><p>Search a term and get the operational meaning—not just a dictionary definition.</p></div><button id="glossaryHomeBtn" class="btn secondary">Dashboard</button></div>
+        <input id="glossarySearch" class="search glossary-search" placeholder="Search ARP, NAT, App-ID, SIC, ClusterXL..." />
+        <div id="glossaryList" class="glossary-grid"></div>
+      </section>
+
+      <article id="lessonView" class="lesson view-panel hidden">
+        <div class="lesson-head">
+          <div><span id="lessonMeta" class="eyebrow"></span><h2 id="lessonTitle"></h2><p id="lessonGoal" class="lesson-goal"></p></div>
+          <div class="lesson-head-actions"><button id="bookmarkBtn" class="btn secondary">☆ Bookmark</button><button id="completeBtn" class="btn primary"></button></div>
         </div>
 
         <div class="lesson-grid">
-          <section class="panel video-panel">
-            <h3>Video</h3>
-            <div class="video-wrap">
-              <iframe id="videoFrame" title="Course video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-            <p id="watchTarget" class="hint"></p>
-            <div id="resourceLinks" class="links"></div>
-          </section>
-
-          <section class="panel">
-            <h3>Learning objectives</h3>
-            <ul id="objectives"></ul>
-          </section>
+          <section class="panel video-panel"><h3>Watch</h3><div class="video-wrap"><iframe id="videoFrame" title="Course video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div><p id="watchTarget" class="hint"></p><div id="resourceLinks" class="links"></div></section>
+          <section class="panel"><h3>Learning objectives</h3><ul id="objectives"></ul><button id="lessonPracticeBtn" class="btn lab-cta">Practise packet thinking</button></section>
         </div>
 
-        <section class="panel">
-          <h3>Concept notes</h3>
-          <div id="concepts" class="concepts"></div>
-        </section>
-
-        <section class="panel">
-          <h3>Packet-flow challenge</h3>
-          <pre id="packetFlow"></pre>
-        </section>
-
-        <section class="panel">
-          <h3>Hands-on lab</h3>
-          <ol id="labSteps"></ol>
-        </section>
-
-        <section class="panel">
-          <h3>Troubleshooting scenario</h3>
-          <p id="troubleshooting"></p>
-          <details>
-            <summary>Show troubleshooting approach</summary>
-            <ol id="troubleshootingSteps"></ol>
-          </details>
-        </section>
-
-        <section class="panel">
-          <h3>FAQ</h3>
-          <div id="faqs" class="faq-list"></div>
-        </section>
-
-        <section class="panel">
-          <h3>Checkpoint quiz</h3>
-          <form id="quizForm"></form>
-          <div class="quiz-actions">
-            <button type="button" id="gradeQuizBtn" class="btn secondary">Check Answers</button>
-            <strong id="quizResult"></strong>
-          </div>
-        </section>
-
-        <section class="panel assignment-panel">
-          <h3>Assignment</h3>
-          <p id="assignmentText"></p>
-          <textarea id="assignmentInput" placeholder="Write your assignment answer / findings here..."></textarea>
-          <div class="save-row"><span id="assignmentSaved" class="saved"></span></div>
-        </section>
-
-        <section class="panel notes-panel">
-          <h3>My notes</h3>
-          <textarea id="notesInput" placeholder="Write your own notes, commands, mistakes, interview points, etc..."></textarea>
-          <div class="save-row"><span id="notesSaved" class="saved"></span></div>
-        </section>
-
-        <div class="lesson-nav">
-          <button id="prevBtn" class="btn secondary">← Previous</button>
-          <button id="homeBtn" class="btn secondary">Dashboard</button>
-          <button id="nextBtn" class="btn primary">Next →</button>
-        </div>
+        <section class="panel"><div class="section-head"><h3>Concept notes</h3><span class="section-tag">LEARN</span></div><div id="concepts" class="concepts"></div></section>
+        <section class="panel packet-panel"><div class="section-head"><h3>Packet-flow challenge</h3><span class="section-tag">THINK</span></div><pre id="packetFlow"></pre></section>
+        <section class="panel"><div class="section-head"><h3>Hands-on lab</h3><span class="section-tag">DO</span></div><ol id="labSteps"></ol></section>
+        <section class="panel troubleshoot-panel"><div class="section-head"><h3>Troubleshooting scenario</h3><span class="section-tag">BREAK / FIX</span></div><p id="troubleshooting"></p><details><summary>Reveal troubleshooting approach</summary><ol id="troubleshootingSteps"></ol></details></section>
+        <section class="panel"><h3>FAQ</h3><div id="faqs" class="faq-list"></div></section>
+        <section class="panel"><div class="section-head"><h3>Checkpoint quiz</h3><span class="section-tag">CHECK</span></div><form id="quizForm"></form><div class="quiz-actions"><button type="button" id="gradeQuizBtn" class="btn secondary">Check Answers</button><strong id="quizResult"></strong></div></section>
+        <section class="panel assignment-panel"><h3>Assignment</h3><p id="assignmentText"></p><textarea id="assignmentInput" placeholder="Write your assignment answer / findings here..."></textarea><div class="save-row"><span id="assignmentSaved" class="saved"></span></div></section>
+        <section class="panel notes-panel"><h3>My notes</h3><textarea id="notesInput" placeholder="Commands, mistakes, interview points, questions for revision..."></textarea><div class="save-row"><span id="notesSaved" class="saved"></span></div></section>
+        <div class="lesson-nav"><button id="prevBtn" class="btn secondary">← Previous</button><button id="homeBtn" class="btn secondary">Dashboard</button><button id="nextBtn" class="btn primary">Next →</button></div>
       </article>
     </section>
   </main>
 
-  <footer>
-    <p>Built as a static GitHub Pages learning portal. Progress is stored locally in your browser unless you export it.</p>
-  </footer>
-
+  <footer><p>Static GitHub Pages learning portal · Your progress stays in your browser unless exported.</p></footer>
   <script src="data.js"></script>
+  <script src="simulator.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
