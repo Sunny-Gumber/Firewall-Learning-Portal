@@ -1,0 +1,144 @@
+/* Firewall Learning Portal — Study Flow v4
+   Single-column learning sequence layered over Reader UI v3. */
+
+/* Make the curated guide read like a lesson, not a card dashboard. */
+.reader-v3 #studyGuidePanel.study-linear-panel{
+  background:transparent!important;
+  border:0!important;
+  border-bottom:1px solid var(--study-line)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  padding:26px 0 38px!important;
+  margin:0!important;
+  color:var(--study-text)!important;
+}
+.study-linear-panel *{box-sizing:border-box}
+.study-linear-panel .study-v4-intro{padding-bottom:24px;border-bottom:1px solid var(--study-line)}
+.study-linear-panel .study-v4-kicker{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.study-linear-panel .study-v4-kicker span:first-child{font-size:10px;font-weight:850;letter-spacing:.1em;color:var(--study-blue)}
+.study-linear-panel .study-v4-estimate{font-size:11px;color:var(--study-muted)}
+.study-linear-panel .study-v4-intro h3{margin:0 0 8px!important;color:var(--study-text)!important;font-size:26px!important;letter-spacing:-.025em;line-height:1.2}
+.study-linear-panel .study-v4-intro>p{margin:0!important;color:var(--study-muted)!important;font-size:14px!important;line-height:1.65!important}
+
+.study-linear-panel .study-v4-outcome{margin:22px 0;padding:16px 18px;border-left:3px solid var(--study-blue);background:var(--study-blue-soft);border-radius:0 9px 9px 0;color:var(--study-text);font-size:14px;line-height:1.65}
+.study-linear-panel .study-v4-outcome strong{display:block;color:var(--study-blue);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+
+.study-linear-panel .study-v4-prereq{margin:0 0 12px;padding:0 0 22px;border-bottom:1px solid var(--study-line)}
+.study-linear-panel .study-v4-prereq h4{margin:0 0 10px!important;color:var(--study-text)!important;font-size:14px!important}
+.study-linear-panel .study-v4-prereq ul{list-style:none!important;margin:0!important;padding:0!important;display:grid;gap:7px}
+.study-linear-panel .study-v4-prereq li{position:relative;padding-left:24px;color:var(--study-muted)!important;font-size:13px;line-height:1.5}
+.study-linear-panel .study-v4-prereq li::before{content:"✓";position:absolute;left:0;top:0;width:17px;height:17px;display:grid;place-items:center;border-radius:50%;background:color-mix(in srgb,var(--study-green) 13%,transparent);color:var(--study-green);font-size:10px;font-weight:900}
+
+.study-linear-panel .study-v4-section{padding:34px 0 6px;scroll-margin-top:86px}
+.study-linear-panel .study-v4-step{display:flex;align-items:baseline;gap:10px;margin-bottom:18px}
+.study-linear-panel .study-v4-step-num{font-size:11px;font-weight:900;letter-spacing:.08em;color:var(--study-blue)}
+.study-linear-panel .study-v4-step h4{margin:0!important;color:var(--study-text)!important;font-size:25px!important;letter-spacing:-.025em;line-height:1.2}
+.study-linear-panel .study-v4-step small{margin-left:auto;color:var(--study-muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+
+/* Reading blocks deliberately avoid card styling. */
+.study-linear-panel .study-reading-block{padding:0 0 24px;margin:0 0 24px;border-bottom:1px solid color-mix(in srgb,var(--study-line) 72%,transparent)}
+.study-linear-panel .study-reading-block:last-child{border-bottom:0;margin-bottom:0}
+.study-linear-panel .study-reading-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.study-linear-panel .study-reading-block h5{margin:0 0 8px!important;color:var(--study-text)!important;font-size:18px!important;line-height:1.35;letter-spacing:-.012em}
+.study-linear-panel .study-reading-block p{margin:0!important;color:#526176!important;font-size:14.5px!important;line-height:1.78!important;max-width:72ch}
+.study-linear-panel .study-priority{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;font-size:9px;font-weight:900;letter-spacing:.075em}
+.study-linear-panel .study-priority.must{background:#e7f5fb;color:#08758b;border:1px solid #bee8f1}
+.study-linear-panel .study-priority.should{background:#ecf8f1;color:#1a7656;border:1px solid #c9ead8}
+.study-linear-panel .study-priority.optional,.study-linear-panel .study-priority.advanced{background:#fff6e8;color:#966019;border:1px solid #f0dfbd}
+
+/* Small network sketch for the packet-first lesson. */
+.study-linear-panel .study-topology{margin:8px 0 28px;padding:18px;border:1px solid var(--study-line);border-radius:10px;background:var(--study-surface-2)}
+.study-linear-panel .study-topology-label{font-size:10px;font-weight:850;letter-spacing:.08em;color:var(--study-muted);text-transform:uppercase;margin-bottom:14px}
+.study-linear-panel .study-topology-row{display:flex;align-items:center;justify-content:center;gap:7px;overflow-x:auto;padding:3px 0}
+.study-linear-panel .study-node{min-width:100px;padding:10px 9px;border:1px solid var(--study-line);background:var(--study-surface);border-radius:8px;text-align:center}
+.study-linear-panel .study-node strong{display:block;color:var(--study-text);font-size:12px}
+.study-linear-panel .study-node small{display:block;color:var(--study-muted);font-size:9px;margin-top:3px}
+.study-linear-panel .study-arrow{color:var(--study-blue);font-weight:900;flex:0 0 auto}
+
+/* Inline check-your-thinking block. */
+.study-linear-panel .study-check{margin:8px 0 30px;padding:18px;border:1px solid #cfe0f5;border-radius:10px;background:#f5f9ff}
+.study-linear-panel .study-check-label{font-size:10px;font-weight:900;letter-spacing:.08em;color:#0d5cbb;text-transform:uppercase}
+.study-linear-panel .study-check h5{margin:7px 0 5px!important;color:var(--study-text)!important;font-size:16px!important}
+.study-linear-panel .study-check p{margin:0 0 12px!important;color:var(--study-muted)!important;font-size:13px!important;line-height:1.55!important}
+.study-linear-panel .study-check-options{display:flex;gap:8px;flex-wrap:wrap}
+.study-linear-panel .study-check-option{appearance:none;border:1px solid var(--study-line);background:var(--study-surface);color:var(--study-text);border-radius:8px;padding:9px 13px;font-weight:700;font-size:12px;cursor:pointer}
+.study-linear-panel .study-check-option:hover{border-color:#9bbbea;background:#f8fbff}
+.study-linear-panel .study-check-option.correct{border-color:#8ed0b3;background:#eef9f3;color:#126c4b}
+.study-linear-panel .study-check-option.wrong{border-color:#e5a6ad;background:#fff3f4;color:#a02e39}
+.study-linear-panel .study-check-feedback{margin-top:11px;padding-top:11px;border-top:1px solid color-mix(in srgb,var(--study-line) 75%,transparent);color:var(--study-muted);font-size:12px;line-height:1.55}
+.study-linear-panel .study-check-feedback strong{color:var(--study-text)}
+
+/* Video is one focused sequence below reading, not a competing second column. */
+.study-linear-panel .study-video-list{display:grid;gap:10px}
+.study-linear-panel .study-video-item{border:1px solid var(--study-line);background:var(--study-surface);border-radius:10px;padding:15px 16px}
+.study-linear-panel .study-video-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px}
+.study-linear-panel .study-time{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10px;color:var(--study-muted);border-left:1px solid var(--study-line);padding-left:8px}
+.study-linear-panel .study-duration{margin-left:auto;font-size:10px;color:var(--study-muted)}
+.study-linear-panel .study-video-item h5{margin:0 0 5px!important;color:var(--study-text)!important;font-size:16px!important;line-height:1.35}
+.study-linear-panel .study-video-source{font-size:11px;color:var(--study-blue);font-weight:750;margin-bottom:6px}
+.study-linear-panel .study-video-item p{margin:0!important;color:var(--study-muted)!important;font-size:13px!important;line-height:1.6!important}
+.study-linear-panel .study-video-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.study-linear-panel .study-play{border:1px solid var(--study-blue);background:var(--study-blue);color:#fff;border-radius:8px;padding:8px 11px;font-size:11px;font-weight:800;cursor:pointer}
+.study-linear-panel .study-open{color:var(--study-blue);font-size:11px;text-decoration:none;font-weight:700;padding:7px 4px}
+.study-linear-panel .study-inline-player{margin:0 0 14px;border:1px solid var(--study-line);border-radius:10px;overflow:hidden;background:#000}
+.study-linear-panel .study-inline-player-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;background:var(--study-surface);border-bottom:1px solid var(--study-line)}
+.study-linear-panel .study-inline-player-head strong{color:var(--study-text);font-size:12px}
+.study-linear-panel .study-inline-player-head span{font-size:10px;color:var(--study-muted)}
+.study-linear-panel .study-inline-player iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+
+/* Commands and teach-back */
+.study-linear-panel .study-command-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.study-linear-panel .study-command{display:flex;align-items:center;gap:10px;border:1px solid var(--study-line);border-radius:8px;background:var(--study-surface-2);padding:10px 11px}
+.study-linear-panel .study-command span{color:var(--study-muted);font-size:10px;min-width:19px}
+.study-linear-panel .study-command code{color:var(--study-text);font-size:11px;word-break:break-word}
+.study-linear-panel .study-teachback{margin:30px 0 0;padding:17px 18px;border:1px solid #cce7da;border-radius:10px;background:#f2faf6;color:var(--study-text);line-height:1.65;font-size:13px}
+.study-linear-panel .study-teachback strong{display:block;color:var(--study-green);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+
+/* Curated guide replaces duplicate generic overview/video blocks for these lessons. */
+.reader-v3 .study-duplicate-hidden{display:none!important}
+
+/* Simpler module labels */
+.reader-v3 .week-title.module-title-v4{color:#67758a!important;margin-top:20px!important;border-top:1px solid var(--study-line);padding-top:14px}
+.reader-v3 .week-title.module-title-v4:first-of-type{border-top:0;padding-top:0}
+
+/* Rail is intentionally shorter. */
+.lesson-rail .rail-bookmark-v4.bookmarked{color:#9b6b0d!important;border-color:#dfca93!important;background:#fff9e9!important}
+
+/* Definitive light-mode readability fix for the old injected guide while v4 is mounting. */
+.reader-v3 #studyGuidePanel,
+.reader-v3 #studyGuidePanel .read-card,
+.reader-v3 #studyGuidePanel .video-segment{
+  color:var(--study-text)!important;
+}
+.reader-v3 #studyGuidePanel .read-card h5,
+.reader-v3 #studyGuidePanel .video-segment h5,
+.reader-v3 #studyGuidePanel .video-segment b{color:var(--study-text)!important}
+.reader-v3 #studyGuidePanel .read-card p,
+.reader-v3 #studyGuidePanel .video-segment p{color:var(--study-muted)!important}
+
+/* Dark study theme */
+body.dark-study .study-linear-panel .study-reading-block p{color:#b8c5d4!important}
+body.dark-study .study-linear-panel .study-priority.must{background:#0d3444;color:#82e6f7;border-color:#1e5d70}
+body.dark-study .study-linear-panel .study-priority.should{background:#153328;color:#8ce3b7;border-color:#2b5c49}
+body.dark-study .study-linear-panel .study-priority.optional,
+body.dark-study .study-linear-panel .study-priority.advanced{background:#342815;color:#f0ca8a;border-color:#66502a}
+body.dark-study .study-linear-panel .study-check{background:#142235;border-color:#314963}
+body.dark-study .study-linear-panel .study-check-option{background:#1a283a;border-color:#34455b;color:var(--study-text)}
+body.dark-study .study-linear-panel .study-check-option:hover{background:#1e3046}
+body.dark-study .study-linear-panel .study-check-option.correct{background:#153328;border-color:#2f7155;color:#9ce6bf}
+body.dark-study .study-linear-panel .study-check-option.wrong{background:#3a2025;border-color:#713842;color:#f4adb5}
+body.dark-study .study-linear-panel .study-video-item,
+body.dark-study .study-linear-panel .study-node,
+body.dark-study .study-linear-panel .study-inline-player-head{background:var(--study-surface)!important}
+body.dark-study .study-linear-panel .study-topology,
+body.dark-study .study-linear-panel .study-command{background:var(--study-surface-2)!important}
+body.dark-study .study-linear-panel .study-teachback{background:#142a22;border-color:#2c5443}
+body.dark-study .lesson-rail .rail-bookmark-v4.bookmarked{background:#332a17!important;border-color:#68572d!important;color:#f0cd85!important}
+
+@media(max-width:720px){
+  .study-linear-panel .study-v4-step{flex-wrap:wrap}
+  .study-linear-panel .study-v4-step small{width:100%;margin-left:0}
+  .study-linear-panel .study-command-list{grid-template-columns:1fr}
+  .study-linear-panel .study-topology-row{justify-content:flex-start}
+  .study-linear-panel .study-video-top .study-duration{width:100%;margin-left:0}
+}
