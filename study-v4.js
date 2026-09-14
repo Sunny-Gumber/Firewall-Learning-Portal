@@ -7,6 +7,7 @@
   let rendering=false;
   let checkState={};
   let activeVideo={};
+  const observedPanels=new WeakSet();
 
   const moduleLabels={
     1:'MODULE 1 · PACKET & IP',
@@ -59,10 +60,20 @@
     return `<div class="study-command-list">${data.commands.map((c,i)=>`<div class="study-command"><span>${String(i+1).padStart(2,'0')}</span><code>${esc(c)}</code></div>`).join('')}</div>`;
   }
 
+  function ensurePanelObserver(panel){
+    if(!panel||observedPanels.has(panel)) return;
+    observedPanels.add(panel);
+    new MutationObserver(()=>{
+      if(rendering) return;
+      if(!panel.querySelector('.study-v4-intro')) setTimeout(()=>renderGuide(true),0);
+    }).observe(panel,{childList:true,subtree:true});
+  }
+
   function renderGuide(force=false){
     const session=currentSession();
     const panel=$('studyGuidePanel');
     if(!session||!panel) return;
+    ensurePanelObserver(panel);
     const data=window.FW_STUDY_CONTENT?.[session.id];
     if(!data){restoreDuplicates();return;}
     if(!force&&panel.querySelector('.study-v4-intro')&&panel.dataset.studyV4===String(session.id)) return;
@@ -173,18 +184,15 @@
         activeVideo[Number(play.dataset.studyId)]={videoId:play.dataset.studyVideo,start:Number(play.dataset.studyStart),end:Number(play.dataset.studyEnd),label:play.dataset.studyLabel};
         scheduleRender();
         setTimeout(()=>document.querySelector('.study-inline-player')?.scrollIntoView({behavior:'smooth',block:'center'}),80);
+        return;
       }
+      if(!$('lessonView')?.classList.contains('hidden')) setTimeout(()=>renderGuide(false),0);
     },true);
   }
 
   function observe(){
     const panel=$('studyGuidePanel');
-    if(panel){
-      new MutationObserver(()=>{
-        if(rendering) return;
-        if(!panel.querySelector('.study-v4-intro')) scheduleRender();
-      }).observe(panel,{childList:true,subtree:true});
-    }
+    if(panel) ensurePanelObserver(panel);
     const title=$('lessonTitle');
     if(title)new MutationObserver(scheduleRender).observe(title,{childList:true,subtree:true,characterData:true});
     const nav=$('courseNav');
@@ -199,6 +207,7 @@
     renderGuide(true);
     simplifyRail();
     observe();
+    window.addEventListener('load',()=>setTimeout(()=>{renderGuide(true);observe();simplifyRail();simplifyModules();},40),{once:true});
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,0));
