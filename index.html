@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Interactive Firewall Learning Portal: Networking, FortiGate, Palo Alto and Check Point." />
+  <title>Firewall Learning Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">FW</div>
+      <div>
+        <h1>Firewall Learning Portal</h1>
+        <p>Networking → FortiGate → Palo Alto → Check Point → Troubleshooting</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button id="exportBtn" class="btn secondary">Export Progress</button>
+      <label class="btn secondary file-btn">Import Progress<input id="importInput" type="file" accept=".json" hidden></label>
+      <button id="resetBtn" class="btn danger">Reset</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="progress-card">
+        <div class="progress-top">
+          <span>Course progress</span>
+          <strong id="progressText">0%</strong>
+        </div>
+        <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+        <small id="completedText">0 of 36 sessions completed</small>
+      </div>
+
+      <input id="searchInput" class="search" placeholder="Search sessions..." />
+      <div id="courseNav" class="course-nav"></div>
+    </aside>
+
+    <section class="content">
+      <div id="dashboard" class="dashboard">
+        <div class="hero">
+          <span class="eyebrow">12-WEEK MASTER PROGRAM</span>
+          <h2>Learn the packet first. Then learn the vendor.</h2>
+          <p>This portal keeps video lessons, theory, labs, FAQs, assignments, quizzes, notes and your progress in one place.</p>
+          <div class="hero-actions">
+            <button id="continueBtn" class="btn primary">Start / Continue</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat"><strong>36</strong><span>Sessions</span></div>
+          <div class="stat"><strong>12</strong><span>Weeks</span></div>
+          <div class="stat"><strong>3×</strong><span>Sessions / week</span></div>
+          <div class="stat"><strong>90–120</strong><span>Minutes / session</span></div>
+        </div>
+
+        <div class="panel">
+          <h3>How to use each session</h3>
+          <div class="session-pattern">
+            <span>15m Recap</span><span>30m Concept</span><span>45m Lab</span><span>15m Troubleshooting</span><span>15m FAQ + Assignment</span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Learning rule</h3>
+          <p><b>Never configure blindly.</b> For every task, answer: What packet enters? Which interface/zone? Which route? Which policy? Which NAT? What session is created? What must happen on the return path?</p>
+        </div>
+      </div>
+
+      <article id="lessonView" class="lesson hidden">
+        <div class="lesson-head">
+          <div>
+            <span id="lessonMeta" class="eyebrow"></span>
+            <h2 id="lessonTitle"></h2>
+            <p id="lessonGoal" class="lesson-goal"></p>
+          </div>
+          <button id="completeBtn" class="btn primary"></button>
+        </div>
+
+        <div class="lesson-grid">
+          <section class="panel video-panel">
+            <h3>Video</h3>
+            <div class="video-wrap">
+              <iframe id="videoFrame" title="Course video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <p id="watchTarget" class="hint"></p>
+            <div id="resourceLinks" class="links"></div>
+          </section>
+
+          <section class="panel">
+            <h3>Learning objectives</h3>
+            <ul id="objectives"></ul>
+          </section>
+        </div>
+
+        <section class="panel">
+          <h3>Concept notes</h3>
+          <div id="concepts" class="concepts"></div>
+        </section>
+
+        <section class="panel">
+          <h3>Packet-flow challenge</h3>
+          <pre id="packetFlow"></pre>
+        </section>
+
+        <section class="panel">
+          <h3>Hands-on lab</h3>
+          <ol id="labSteps"></ol>
+        </section>
+
+        <section class="panel">
+          <h3>Troubleshooting scenario</h3>
+          <p id="troubleshooting"></p>
+          <details>
+            <summary>Show troubleshooting approach</summary>
+            <ol id="troubleshootingSteps"></ol>
+          </details>
+        </section>
+
+        <section class="panel">
+          <h3>FAQ</h3>
+          <div id="faqs" class="faq-list"></div>
+        </section>
+
+        <section class="panel">
+          <h3>Checkpoint quiz</h3>
+          <form id="quizForm"></form>
+          <div class="quiz-actions">
+            <button type="button" id="gradeQuizBtn" class="btn secondary">Check Answers</button>
+            <strong id="quizResult"></strong>
+          </div>
+        </section>
+
+        <section class="panel assignment-panel">
+          <h3>Assignment</h3>
+          <p id="assignmentText"></p>
+          <textarea id="assignmentInput" placeholder="Write your assignment answer / findings here..."></textarea>
+          <div class="save-row"><span id="assignmentSaved" class="saved"></span></div>
+        </section>
+
+        <section class="panel notes-panel">
+          <h3>My notes</h3>
+          <textarea id="notesInput" placeholder="Write your own notes, commands, mistakes, interview points, etc..."></textarea>
+          <div class="save-row"><span id="notesSaved" class="saved"></span></div>
+        </section>
+
+        <div class="lesson-nav">
+          <button id="prevBtn" class="btn secondary">← Previous</button>
+          <button id="homeBtn" class="btn secondary">Dashboard</button>
+          <button id="nextBtn" class="btn primary">Next →</button>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built as a static GitHub Pages learning portal. Progress is stored locally in your browser unless you export it.</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
