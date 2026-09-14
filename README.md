@@ -60,9 +60,7 @@ Then browse to `http://localhost:8000`.
 
 ## GitHub Pages
 
-The project contains `.github/workflows/pages.yml` for GitHub Pages deployment.
-
-In the repository, go to **Settings → Pages** and select **GitHub Actions** as the source. Every push to `main` will then redeploy the portal.
+The project contains `.github/workflows/pages.yml` for GitHub Pages deployment and is configured to enable Pages on first deployment when repository permissions allow it.
 
 Expected site URL:
 
